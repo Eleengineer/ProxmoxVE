@@ -55,11 +55,13 @@ function default_settings() {
 
 function update_script() {
 header_info
+check_container_storage
+check_container_resources
 if [[ ! -d /usr/lib/jellyfin ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-apt-get --with-new-pkgs upgrade jellyfin jellyfin-server &>/dev/null
+apt-get -y --with-new-pkgs upgrade jellyfin jellyfin-server &>/dev/null
 msg_ok "Updated ${APP} LXC"
 exit
 }

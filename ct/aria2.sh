@@ -20,7 +20,7 @@ echo -e "Loading..."
 APP="Aria2"
 var_disk="8"
 var_cpu="2"
-var_ram="1028"
+var_ram="1024"
 var_os="debian"
 var_version="12"
 variables
@@ -53,6 +53,8 @@ function default_settings() {
 
 function update_script() {
 header_info
+check_container_storage
+check_container_resources
 if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating $APP LXC"
 apt-get update &>/dev/null

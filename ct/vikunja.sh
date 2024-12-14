@@ -56,11 +56,9 @@ function default_settings() {
 
 function update_script() {
 header_info
+check_container_storage
+check_container_resources
 if [[ ! -d /opt/vikunja ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
-  read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
-  [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
-fi
 RELEASE=$(curl -s https://dl.vikunja.io/vikunja/ | grep -oP 'href="/vikunja/\K[0-9]+\.[0-9]+\.[0-9]+' | sort -V | tail -n 1)
 if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
   msg_info "Stopping ${APP}"
@@ -69,10 +67,10 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
 
   msg_info "Updating ${APP} to ${RELEASE}"
   cd /opt
-  rm -rf /opt/*
+  rm -rf /opt/vikunja/vikunja
   wget -q "https://dl.vikunja.io/vikunja/$RELEASE/vikunja-$RELEASE-amd64.deb"
   DEBIAN_FRONTEND=noninteractive dpkg -i vikunja-$RELEASE-amd64.deb &>/dev/null
-  echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
+  echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP}"
 
   msg_info "Starting ${APP}"

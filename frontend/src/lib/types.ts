@@ -21,7 +21,7 @@ export type Script = {
       ram: number | null;
       hdd: number | null;
       os: string | null;
-      version: number | null;
+      version: string | null;
     };
   }[];
   default_credentials: {
@@ -46,3 +46,13 @@ export type Category = {
 export type Metadata = {
   categories: Category[];
 };
+
+export interface Version {
+  name: string;
+  slug: string;
+}
+
+export interface OperatingSystem {
+  name: string;
+  versions: Version[];
+}

@@ -2,7 +2,7 @@
     "name": "Recyclarr",
     "slug": "recyclarr",
     "categories": [
-        12
+        18
     ],
     "date_created": "2024-11-15",
     "type": "ct",
@@ -18,9 +18,9 @@
             "type": "default",
             "script": "ct/recyclarr.sh",
             "resources": {
-                "cpu": "1",
-                "ram": "512",
-                "hdd": "2",
+                "cpu": 1,
+                "ram": 512,
+                "hdd": 2,
                 "os": "debian",
                 "version": "12"
             }

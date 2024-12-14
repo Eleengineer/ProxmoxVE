@@ -17,10 +17,6 @@ cat <<"EOF"
 EOF
 }
 header_info
-if ! grep -q -m1 'avx[^ ]*' /proc/cpuinfo; then
-  echo "AVX instruction set is not supported on this CPU."
-  exit
-fi
 echo -e "Loading..."
 APP="Unifi"
 var_disk="8"
@@ -58,10 +54,12 @@ function default_settings() {
 
 function update_script() {
 header_info
+check_container_storage
+check_container_resources
 if [[ ! -d /usr/lib/unifi ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
-apt-get update --allow-releaseinfo-change
-apt-get install -y unifi
+apt-get update --allow-releaseinfo-change &>/dev/null
+apt-get install -y unifi &>/dev/null
 msg_ok "Updated Successfully"
 exit
 }

@@ -1,28 +1,27 @@
 #!/usr/bin/env bash
 source <(curl -s https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/build.func)
-# Copyright (c) 2021-2024 tteck
-# Author: tteck (tteckster)
+# Copyright (c) 2021-2024 community-scripts ORG
+# Author: wimb0
 # License: MIT
 # https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 
 function header_info {
 clear
 cat <<"EOF"
-   _____                       __           __
-  / ___/____________  ______  / /____  ____/ /
-  \__ \/ ___/ ___/ / / / __ \/ __/ _ \/ __  / 
- ___/ / /__/ /  / /_/ / /_/ / /_/  __/ /_/ /  
-/____/\___/_/   \__, / .___/\__/\___/\__,_/   
-               /____/_/                       
- 
+   __  __      __                          __
+  / / / /___  / /_  ____  __  ______  ____/ /
+ / / / / __ \/ __ \/ __ \/ / / / __ \/ __  / 
+/ /_/ / / / / /_/ / /_/ / /_/ / / / / /_/ /  
+\____/_/ /_/_.___/\____/\__,_/_/ /_/\__,_/   
+                                             
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Scrypted"
-var_disk="8"
-var_cpu="2"
-var_ram="2048"
+APP="Unbound"
+var_disk="2"
+var_cpu="1"
+var_ram="512"
 var_os="debian"
 var_version="12"
 variables
@@ -55,11 +54,13 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -f /etc/systemd/system/scrypted.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP} LXC"
+check_container_storage
+check_container_resources
+if [[ ! -d /etc/unbound ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated Successfully"
+msg_ok "Updated $APP LXC"
 exit
 }
 
@@ -68,5 +69,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}https://${IP}:10443${CL} \n"
+echo -e "${APP} should be online.
+         ${BL} Set your DNS server to ${IP}:5335 ${CL} \n"

@@ -16,6 +16,13 @@ jobs:
       contents: write
       pull-requests: write
     steps:
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -28,26 +35,13 @@ jobs:
 
           LATEST_DATE=$(echo "$DATES" | sed -n '1p')
           SECOND_LATEST_DATE=$(echo "$DATES" | sed -n '2p')
-          TODAY=$(date +%Y-%m-%d)
+          TODAY=$(date -u +%Y-%m-%d)
 
           echo "TODAY=$TODAY" >> $GITHUB_ENV
           if [ "$LATEST_DATE" == "$TODAY" ]; then
             echo "LATEST_DATE=$SECOND_LATEST_DATE" >> $GITHUB_ENV
           else
             echo "LATEST_DATE=$LATEST_DATE" >> $GITHUB_ENV
-          fi
-
-      - name: Check if CHANGELOG.md was modified
-        id: changelog-check
-        run: |
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-          echo "Changed files: $CHANGED_FILES"
-          if echo "$CHANGED_FILES" | grep -q 'CHANGELOG.md'; then
-            echo "Changes detected in CHANGELOG.md, skipping additional checks."
-            echo "changelog_modified=true" >> $GITHUB_ENV
-          else
-            echo "No changes to CHANGELOG.md, continuing with protection checks."
-            echo "changelog_modified=false" >> $GITHUB_ENV
           fi
 
       - name: Get categorized pull requests
@@ -69,6 +63,7 @@ jobs:
             const { data: pulls } = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
+              base: "main",
               state: "closed",
               sort: "updated",
               direction: "desc",
@@ -106,7 +101,7 @@ jobs:
             const changelogPath = path.resolve('CHANGELOG.md');
             const categorizedPRs = ${{ steps.get-categorized-prs.outputs.result }};
 
-            let newReleaseNotes = `\n## ${today}\n\n### Changed\n\n`;
+            let newReleaseNotes = `## ${today}\n\n### Changed\n\n`;
             for (const { title, notes } of categorizedPRs) {
               if (notes.length > 0) {
                 newReleaseNotes += `### ${title}\n\n${notes.join("\n")}\n\n`;
@@ -118,14 +113,19 @@ jobs:
 
             // Replace todays release notes or insert release notes above previous release notes
             const regex = changelogIncludesTodaysReleaseNotes ? 
-              new RegExp(`\n## ${today}.*(?=## ${latestDateInChangelog})`, "gs") :
+              new RegExp(`## ${today}.*(?=## ${latestDateInChangelog})`, "gs") :
               new RegExp(`(?=## ${latestDateInChangelog})`, "gs");
 
             const newChangelogContent = changelogContent.replace(regex, newReleaseNotes)
             await fs.writeFile(changelogPath, newChangelogContent);
-            
+
+      - name: Check if there are any changes
+        id: verify-diff
+        run: |
+          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit and push changes to separate branch
+        if: steps.verify-diff.outputs.changed == 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -135,8 +135,9 @@ jobs:
           git push origin $BRANCH_NAME --force
 
       - name: Create pull request if not exists
+        if: steps.verify-diff.outputs.changed == 'true'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           PR_EXISTS=$(gh pr list --head "${BRANCH_NAME}" --json number --jq '.[].number')
           if [ -z "$PR_EXISTS" ]; then
@@ -145,4 +146,14 @@ jobs:
                          --head $BRANCH_NAME \
                          --base main \
                          --label "$AUTOMATED_PR_LABEL"
+          fi
+
+      - name: Approve pull request
+        if: steps.verify-diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=$(gh pr list --head "${BRANCH_NAME}" --json number --jq '.[].number')
+          if [ -n "$PR_NUMBER" ]; then
+            gh pr review $PR_NUMBER --approve
           fi

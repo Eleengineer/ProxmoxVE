@@ -55,11 +55,9 @@ function default_settings() {
 
 function update_script() {
 header_info
+check_container_storage
+check_container_resources
 if [[ ! -d /opt/bookstack ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
-  read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
-  [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
-fi
 RELEASE=$(curl -s https://api.github.com/repos/BookStackApp/BookStack/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
   msg_info "Stopping Apache2"
@@ -72,9 +70,10 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   unzip -q v${RELEASE}.zip
   mv BookStack-${RELEASE} /opt/bookstack
   mv /opt/.env /opt/bookstack/.env
+  cd /opt/bookstack
   COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev  &>/dev/null
-  php artisan key:generate &>/dev/null
-  php artisan migrate &>/dev/null
+  php artisan key:generate --force &>/dev/null
+  php artisan migrate --force &>/dev/null
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP}"
 
