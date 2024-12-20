@@ -16,6 +16,112 @@ All LXC instances created using this repository come pre-installed with Midnight
 > [!IMPORTANT]
 Do not break established syntax in this file, as it is automatically updated by a Github Workflow
 
+## 2024-12-20
+
+### Changed
+
+### ✨ New Scripts
+
+- New Script: Apache Guacamole [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#657](https://github.com/community-scripts/ProxmoxVE/pull/657))
+- New Script: silverbullet [@dsiebel](https://github.com/dsiebel) ([#659](https://github.com/community-scripts/ProxmoxVE/pull/659))
+- New Script: Zammad [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#640](https://github.com/community-scripts/ProxmoxVE/pull/640))
+- New Script: CheckMk [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#926](https://github.com/community-scripts/ProxmoxVE/pull/926))
+
+### 🚀 Updated Scripts
+
+- Fix: Remove PHP Key generation in Bookstack Update [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#948](https://github.com/community-scripts/ProxmoxVE/pull/948))
+
+### 🌐 Website
+
+- Add Login Note for Checkmk [@MickLesk](https://github.com/MickLesk) ([#940](https://github.com/community-scripts/ProxmoxVE/pull/940))
+
+### ❔ Unlabelled
+
+- Update build.func to display the Proxmox Hostname [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#894](https://github.com/community-scripts/ProxmoxVE/pull/894))
+
+## 2024-12-19
+
+### Changed
+
+### 🚀 Updated Scripts
+
+- Fix: Bookstack Update Function [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#844](https://github.com/community-scripts/ProxmoxVE/pull/844))
+- mysql not showing ip after install [@snow2k9](https://github.com/snow2k9) ([#924](https://github.com/community-scripts/ProxmoxVE/pull/924))
+- Fix Omada - Crawling latest version [@MickLesk](https://github.com/MickLesk) ([#918](https://github.com/community-scripts/ProxmoxVE/pull/918))
+
+### 🌐 Website
+
+- Fix script path formatting in InstallMethod component [@BramSuurdje](https://github.com/BramSuurdje) ([#909](https://github.com/community-scripts/ProxmoxVE/pull/909))
+- Fix Part-DB Docu (cred command) [@EvilBlood](https://github.com/EvilBlood) ([#898](https://github.com/community-scripts/ProxmoxVE/pull/898))
+- Enhance Tooltip component by adding CircleHelp icon and fix instructions in script component [@BramSuurdje](https://github.com/BramSuurdje) ([#910](https://github.com/community-scripts/ProxmoxVE/pull/910))
+
+## 2024-12-18
+
+### Changed
+
+### ✨ New Scripts
+
+- New script: Part-DB LXC [@bvdberg01](https://github.com/bvdberg01) ([#591](https://github.com/community-scripts/ProxmoxVE/pull/591))
+
+### 🚀 Updated Scripts
+
+- Fix Kernel-Clean for Proxmox 8.x [@MickLesk](https://github.com/MickLesk) ([#904](https://github.com/community-scripts/ProxmoxVE/pull/904))
+- [Frigate] Remove SSE 4.2 from instruction set supporting OpenVino [@remz1337](https://github.com/remz1337) ([#902](https://github.com/community-scripts/ProxmoxVE/pull/902))
+
+### 🌐 Website
+
+- New Metadata Category: "Coding & AI" [@newzealandpaul](https://github.com/newzealandpaul) ([#890](https://github.com/community-scripts/ProxmoxVE/pull/890))
+- Moved Webmin to "Server & Networking" [@newzealandpaul](https://github.com/newzealandpaul) ([#891](https://github.com/community-scripts/ProxmoxVE/pull/891))
+
+## 2024-12-17
+
+### Changed
+
+### 🚀 Updated Scripts
+
+- Fix Alpine-Nextcloud: Bump PHP Version to 8.3 [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#865](https://github.com/community-scripts/ProxmoxVE/pull/865))
+- Correction of Jellyfin CT Port [@mneten](https://github.com/mneten) ([#884](https://github.com/community-scripts/ProxmoxVE/pull/884))
+- fix spinner on lxc-ip-tag [@MickLesk](https://github.com/MickLesk) ([#876](https://github.com/community-scripts/ProxmoxVE/pull/876))
+- Fix Keycloak Installation [@MickLesk](https://github.com/MickLesk) ([#874](https://github.com/community-scripts/ProxmoxVE/pull/874))
+- Fix ports ressources [@MickLesk](https://github.com/MickLesk) ([#867](https://github.com/community-scripts/ProxmoxVE/pull/867))
+
+### 🧰 Maintenance
+
+- Small Changes to the PR Template [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#862](https://github.com/community-scripts/ProxmoxVE/pull/862))
+
+### ❔ Unlabelled
+
+- calculate terminal size for header_info [@MickLesk](https://github.com/MickLesk) ([#879](https://github.com/community-scripts/ProxmoxVE/pull/879))
+- Fix header creation with figlet for alpine [@MickLesk](https://github.com/MickLesk) ([#869](https://github.com/community-scripts/ProxmoxVE/pull/869))
+
+## 2024-12-16
+
+### Changed
+
+### 💥 Breaking Changes
+
+- Massive Update: build.func | install.func | create_lxc.sh (Part 1) [@MickLesk](https://github.com/MickLesk) ([#643](https://github.com/community-scripts/ProxmoxVE/pull/643))
+- Update ALL CT's to new default (Part 2) [@MickLesk](https://github.com/MickLesk) ([#710](https://github.com/community-scripts/ProxmoxVE/pull/710))
+
+### ✨ New Scripts
+
+- New Script: LXC IP-Tag [@MickLesk](https://github.com/MickLesk) ([#536](https://github.com/community-scripts/ProxmoxVE/pull/536))
+
+### 🚀 Updated Scripts
+
+- Increase Size | Description & Download-URL of Debian VM [@MickLesk](https://github.com/MickLesk) ([#837](https://github.com/community-scripts/ProxmoxVE/pull/837))
+- Update Script: Remove Docker Compose Question [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#847](https://github.com/community-scripts/ProxmoxVE/pull/847))
+
+### 🌐 Website
+
+- Bump nanoid from 3.3.7 to 3.3.8 in /frontend [@dependabot[bot]](https://github.com/dependabot[bot]) ([#845](https://github.com/community-scripts/ProxmoxVE/pull/845))
+
+### ❔ Unlabelled
+
+- Fix SSH root access in install.func [@havardthom](https://github.com/havardthom) ([#858](https://github.com/community-scripts/ProxmoxVE/pull/858))
+- Fix variable name for CT_TYPE override [@remz1337](https://github.com/remz1337) ([#855](https://github.com/community-scripts/ProxmoxVE/pull/855))
+- Keeps the same style after writing the SEARCH icon [@remz1337](https://github.com/remz1337) ([#851](https://github.com/community-scripts/ProxmoxVE/pull/851))
+
 ## 2024-12-13
 
 ### Changed

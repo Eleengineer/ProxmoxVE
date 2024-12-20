@@ -1,0 +1,39 @@
+{
+  "name": "Checkmk",
+  "slug": "checkmk",
+  "categories": [
+    7
+  ],
+  "date_created": "2024-12-19",
+  "type": "ct",
+  "updateable": true,
+  "privileged": false,
+  "interface_port": 80,
+  "documentation": "https://docs.checkmk.com/",
+  "website": "https://checkmk.com/",
+  "logo": "https://checkmk.com/application/files/cache/thumbnails/67fc39c599afdf20557d538416e3efd3.png",
+  "description": "Checkmk - Your complete IT monitoring solution",
+  "install_methods": [
+    {
+      "type": "default",
+      "script": "ct/checkmk.sh",
+      "resources": {
+        "cpu": 2,
+        "ram": 2048,
+        "hdd": 4,
+        "os": null,
+        "version": null
+      }
+    }
+  ],
+  "default_credentials": {
+    "username": null,
+    "password": null
+  },
+    "notes": [
+        {
+            "text": "Login Credentials : `cat ~/checkmk.creds`",
+            "type": "info"
+        }
+    ]
+}
