@@ -14,7 +14,7 @@ setting_up_container
 network_check
 update_os
 
-msg_info "Installing Crafty"                       # Crafty Controller requires Python 3.9+
+msg_info "Installing Dependencies"                       # Crafty Controller requires Python 3.9+
 $STD sudo add-apt-repository ppa:deadsnakes/ppa
 $STD sudo apt update
 $STD sudo apt install python3.9 -y
@@ -30,9 +30,9 @@ msg_ok "openjdk Installed"
 msg_info "cloning crafty"
 # Clone the Crafty installer and run it
 $STD git clone https://gitlab.com/crafty-controller/crafty-installer-4.0.git
+msg_info "Installing Crafty"
 
 $STD cd crafty-installer-4.0 && sudo ./install_crafty.sh
-msg_info "Installing Dependencies"
 
 
 msg_info "Creating Service"

@@ -1,0 +1,39 @@
+{
+    "name": "Crafty-Controller",
+    "slug": "crafty-controller",
+    "categories": [
+        10
+    ],
+    "date_created": "2024-05-02",
+    "type": "ct",
+    "updateable": true,
+    "privileged": false,
+    "interface_port": 8443,
+    "documentation": "https://docs.craftycontrol.com",
+    "website": "https://www.craftycontrol.com",
+    "logo": "https://docs.craftycontrol.com/img/logo_long.svg",
+    "description": "Crafty Controller is a free and open-source Minecraft launcher and manager that allows users to start and administer Minecraft servers from a user-friendly interface. The interface is run as a self-hosted web server that is accessible to devices on the local network by default and can be port forwarded to provide external access outside of your local network.",
+    "install_methods": [
+        {
+            "type": "default",
+            "script": "ct/crafty-controller.sh",
+            "resources": {
+                "cpu": 2,
+                "ram": 2048,
+                "hdd": 20,
+                "os": "debian",
+                "version": 12
+            }
+        }
+    ],
+    "default_credentials": {
+        "username": "crafty",
+        "password": "crafty"
+    },
+    "notes": [
+        {
+            "text": "Resource and network settings are adjustable post LXC creation.",
+            "type": "info"
+        }
+    ]
+}

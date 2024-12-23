@@ -1,56 +1,49 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/community-scripts//ProxmoxVE/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/Eleengineer/ProxmoxVE/dev/misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 
-function header_info {
-clear
-cat <<"EOF"
-   ______           ______              ______            __             ____         
-  / ____/________ _/ __/ /___  __      / ____/___  ____  / /__________  / / /__  _____
- / /   / ___/ __ `/ /_/ __/ / / /_____/ /   / __ \/ __ \/ __/ ___/ __ \/ / / _ \/ ___/
-/ /___/ /  / /_/ / __/ /_/ /_/ /_____/ /___/ /_/ / / / / /_/ /  / /_/ / / /  __/ /    
-\____/_/   \__,_/_/  \__/\__, /      \____/\____/_/ /_/\__/_/   \____/_/_/\___/_/     
-                        /____/                                                        
-EOF
-}
-header_info
-echo -e "Loading..."
+
 APP="Crafty-Controller"
 var_disk="20"
 var_cpu="2"
 var_ram="2048"
-var_os="ubuntu"
+var_os="debian"
 var_version="12"
+var_unprivileged="0"
+
+header_info "$APP"
+base_settings
+
 variables
 color
 catch_errors
 
-function default_settings() {
-  CT_TYPE="1"
-  PW=""
-  CT_ID=$NEXTID
-  HN=$NSAPP
-  DISK_SIZE="$var_disk"
-  CORE_COUNT="$var_cpu"
-  RAM_SIZE="$var_ram"
-  BRG="vmbr0"
-  NET="dhcp"
-  GATE=""
-  APT_CACHER=""
-  APT_CACHER_IP=""
-  DISABLEIP6="no"
-  MTU=""
-  SD=""
-  NS=""
-  MAC=""
-  VLAN=""
-  SSH="no"
-  VERB="no"
-  echo_default
-}
+# function default_settings() {
+#   CT_TYPE="1"
+#   PW=""
+#   CT_ID=$NEXTID
+#   HN=$NSAPP
+#   DISK_SIZE="$var_disk"
+#   CORE_COUNT="$var_cpu"
+#   RAM_SIZE="$var_ram"
+#   BRG="vmbr0"
+#   NET="dhcp"
+#   GATE=""
+#   APT_CACHER=""
+#   APT_CACHER_IP=""
+#   DISABLEIP6="no"
+#   MTU=""
+#   SD=""
+#   NS=""
+#   MAC=""
+#   VLAN=""
+#   SSH="yes"
+#   VERB="no"
+#   echo_default
+# }
 
 function update_script() {
     header_info
@@ -71,8 +64,7 @@ function update_script() {
     exit
 }
 
-# function install_crafty() {
-#     }
+
 
 start
 build_container
