@@ -57,7 +57,7 @@ ExecStart=/opt/crafty/bin/crafty serve
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl enable -q --now crafty
+systemctl enable -q --now crafty.service
 msg_ok "Created Service"
 
 msg_info "Cleaning up"
